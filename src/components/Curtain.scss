@@ -1,0 +1,41 @@
+@import '../sass-exports/variables';
+
+.curtain {
+    position: fixed;
+    height: 100vh;
+    background: $highlight-color;
+    top: 0;
+    z-index: 5;
+
+    &.open {
+        width: 100vw;
+        right: 0;
+        animation: curtainopen 500ms ease-in-out 100ms forwards;
+    }
+
+    &.close {
+        width: 0;
+        left: 0;
+        animation: curtainclose 500ms ease-in-out forwards;
+    }
+}
+
+@keyframes curtainopen {
+    0% {
+        width: 100vw;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes curtainclose {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100vw;
+    }
+}

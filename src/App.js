@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
+import Welcome from './components/Welcome'
+import GameScreen from './components/GameScreen'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const [playerName, setPlayerName] = useState("");
+  const onSubmissionOfUsername = (playerName) => {
+    setPlayerName(playerName)
+  }
+
+  // We would eventually need to fetch out scores from a service
+  const getTopScorer = () => {
+    return {
+      name: "kabir",
+      score: 345
+    }
+  }
+
+  // if (playerName === "") return <Welcome onSubmissionOfUsername={onSubmissionOfUsername} topScorer={getTopScorer()}></Welcome>
+  // else return <GameScreen topScorer={getTopScorer()} playerName={playerName}></GameScreen>
+
+  return <GameScreen topScorer={getTopScorer()} playerName="Rohan"></GameScreen>
 }
 
 export default App;

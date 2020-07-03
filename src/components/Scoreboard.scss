@@ -1,0 +1,66 @@
+@import '../sass-exports/variables';
+@import '../sass-exports/utils';
+
+.scoreBoard {
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Kongtext';
+    width: hGrid(9);
+    height: vGrid(5);
+    pointer-events: none;
+    color: $highlight-color;
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1;
+
+        &.column-1 {
+            flex: 1;
+        }
+
+        &.column-2 {
+            flex: 1;
+
+            .playerName {
+                height: 30px;
+            }
+
+            .call-to-action {
+                background-color: $highlight-color;
+                width: hGrid(3);
+                height: vGrid(0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8em;
+                color: $dark-base-color;
+            }
+        }
+
+        &.column-3 {
+            flex: 1;
+        }
+
+        .hearts {
+            list-style: none;
+            margin-top: $paragraph-gap;
+
+            li {
+                display: inline;
+                padding: 8px;
+            }
+        }
+    }
+
+    &.inactive {
+        color: $subdue-color;
+
+        .call-to-action {
+            opacity: 0;
+        }
+    }
+}
