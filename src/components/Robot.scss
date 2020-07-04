@@ -1,189 +1,190 @@
 @import "../sass-exports/variables";
 
 .robot {
-    width: 203px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    position: relative;
+  width: 203px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
 
-    div:not(.eye):not(.mouth):not(.socket) {
-        background: $highlight-color;
-    }
+  div:not(.eye):not(.mouth):not(.socket) {
+    background: $highlight-color;
+  }
 }
 
 .head {
-    width: 163px;
-    height: 81px;
-    position: relative;
+  width: 163px;
+  height: 81px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  order: 2;
+
+  .socket {
+    height: 25px;
+    width: 122px;
+    margin-top: 20px;
+    background: $dark-base-color;
     display: flex;
-    justify-content: center;
-    order: 2;
+    justify-content: space-around;
+    position: relative;
 
-    .socket {
-        height: 25px;
-        width: 122px;
-        margin-top: 20px;
-        background: $dark-base-color;
-        display: flex;
-        justify-content: space-around;
-        position: relative;
-
-        .eye {
-            width: 31px;
-            height: 10px;
-            background: white;
-        }
+    .eye {
+      width: 31px;
+      height: 10px;
+      background: white;
     }
+  }
 }
 
 .ear {
-    height: 41px;
-    width: 20px;
-    align-self: center;
+  height: 41px;
+  width: 20px;
+  align-self: center;
 
-    &.left-ear {
-        order: 1;
-    }
+  &.left-ear {
+    order: 1;
+  }
 
-    &.right-ear {
-        order: 3;
-    }
+  &.right-ear {
+    order: 3;
+  }
 }
 
 .chin {
-    width: 122px;
-    height: 21px;
-    order: 4;
-    position: relative;
-    display: flex;
-    justify-content: center;
+  width: 122px;
+  height: 21px;
+  order: 4;
+  position: relative;
+  display: flex;
+  justify-content: center;
 
-    & > div {
-        width: 81px;
-        height: 100%;
-        position: absolute;
-        top: 0px;
-        margin: 0 auto;
-    }
+  & > div {
+    width: 81px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    margin: 0 auto;
+  }
 
-    .mouth {
-        background: $dark-base-color;
-    }
+  .mouth {
+    background: $dark-base-color;
+  }
 
-    .jaw {
-        margin-top: 4px;
-    }
+  .jaw {
+    margin-top: 4px;
+  }
 }
 
 .happy {
-    .jaw {
-        animation: laugh 300ms infinite ease-out;
-    }
+  .jaw {
+    animation: laugh 300ms infinite ease-out;
+  }
 
-    .head .socket .eye {
-        animation: glimmer 300ms infinite;
-    }
+  .head .socket .eye {
+    animation: glimmer 300ms infinite;
+  }
 }
 
 .angry {
-    animation: shiver 100ms infinite;
-    .ear {
-        background: $red !important;
-    }
+  animation: shiver 100ms infinite;
+  .ear {
+    background: $red !important;
+  }
 
-    .jaw {
-        margin-top: 8px;
+  .jaw {
+    margin-top: 8px;
+  }
+  .head {
+    .socket {
+      padding: 0 10px;
+      border: 1px solid $red;
     }
-    .head {
-        .socket {
-            padding: 0 10px;
-            border: 1px solid $red;
-        }
-        .eye {
-            background: $red;
-            box-shadow: 1px 1px 5px $red, -1px -1px 5px $red;
-        }
+    .eye {
+      background: $red;
+      box-shadow: 1px 1px 5px $red, -1px -1px 5px $red;
     }
+  }
 }
 
 .chill {
-    .socket:after {
-        content: "";
-        display: block;
-        position: absolute;
-        background: white;
-        height: 100%;
-        width: 6px;
-        left: 0px;
-        opacity: 0;
+  .socket:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: white;
+    height: 100%;
+    width: 6px;
+    left: 0px;
+    opacity: 0;
 
-        animation: dazzle 2s 2s infinite ease-in-out;
-    }
+    animation: dazzle 2s 2s infinite ease-in-out;
+  }
 }
 
 @keyframes laugh {
-    0%,
-    100% {
-        margin-top: 10px;
-    }
+  0%,
+  100% {
+    margin-top: 10px;
+  }
 
-    50% {
-        margin-top: 21px;
-    }
+  50% {
+    margin-top: 21px;
+  }
 }
 @keyframes glimmer {
-    0%,
-    100% {
-        background: white;
-    }
+  0%,
+  100% {
+    background: white;
+  }
 
-    50% {
-        background: $blue;
-    }
+  50% {
+    background: $blue;
+  }
 }
 
 @keyframes shiver {
-    0%,
-    100% {
-        transform: translateX(-2px);
-    }
+  0%,
+  100% {
+    transform: translateX(-2px);
+  }
 
-    50% {
-        transform: translateX(2px);
-    }
+  50% {
+    transform: translateX(2px);
+  }
 }
 
 @keyframes dazzle {
-    0%,
-    49% {
-        opacity: 0;
-        left: 0px;
-    }
+  0%,
+  49% {
+    opacity: 0;
+    left: 0px;
+  }
 
-    50% {
-        opacity: 1;
-        left: 0px;
-    }
+  50% {
+    opacity: 1;
+    left: 0px;
+  }
 
-    70% {
-        left: 97%;
-        opacity: 1;
-    }
+  70% {
+    left: 97%;
+    opacity: 1;
+  }
 
-    71%,
-    100% {
-        left: 97%;
-        opacity: 0;
-    }
+  71%,
+  100% {
+    left: 97%;
+    opacity: 0;
+  }
 }
 
 .undercover {
-    div:not(.eye):not(.mouth):not(.socket), .eye {
-        background: $subdue-color !important;
-    }
+  div:not(.eye):not(.mouth):not(.socket),
+  .eye {
+    background: $subdue-color !important;
+  }
 
-    .jaw {
-        margin-top: 0;
-    }
+  .jaw {
+    margin-top: 0;
+  }
 }

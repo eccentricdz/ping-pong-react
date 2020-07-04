@@ -2,37 +2,37 @@
 @import "../sass-exports/utils";
 
 .game-stat {
-    text-align: center;
+  text-align: center;
 
-    .game-stat-value {
-        color: $highlight-color;
-    }
+  .game-stat-value {
+    color: $highlight-color;
+  }
 
-    .game-stat-header {
-        font-size: 0.6em;
-        color: white;
-    }
+  .game-stat-header {
+    font-size: 0.6em;
+    color: white;
+  }
 
-    &.highlight {
-        animation: blink 500ms 5;
-    }
+  &.highlight {
+    animation: blink 500ms 5;
+  }
 }
 
 .inactive {
-    .game-stat-value,
-    .game-stat-header {
-        color: $subdue-color;
-        animation: none;
-    }
+  .game-stat-value,
+  .game-stat-header {
+    color: $subdue-color;
+    animation: none;
+  }
 }
 
 @keyframes blink {
-    0%,
-    100% {
-        opacity: 0;
-    }
+  0%,
+  100% {
+    opacity: 0;
+  }
 
-    50% {
-        opacity: 1;
-    }
+  50% {
+    opacity: 1;
+  }
 }

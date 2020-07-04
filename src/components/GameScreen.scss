@@ -1,16 +1,16 @@
-@import '../sass-exports/variables';
-@import '../sass-exports/utils';
+@import "../sass-exports/variables";
+@import "../sass-exports/utils";
 
 .gameScreenWrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #myCanvas {
-    display: block;
-    width: hGrid(10);
-    height: vGrid(7);
-    z-index: 4;
+  display: block;
+  width: hGrid(10);
+  height: vGrid(7);
+  z-index: 4;
 }

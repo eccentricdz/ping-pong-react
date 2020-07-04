@@ -1,108 +1,109 @@
-@import '../sass-exports/variables';
-@import '../sass-exports/utils';
+@import "../sass-exports/variables";
+@import "../sass-exports/utils";
 
 .welcome-container {
+  display: flex;
+  flex-direction: column;
+  width: hGrid(10);
+  height: vGrid(7);
+  padding: vGrid(1) hGrid(1);
+  color: white;
+
+  .row {
     display: flex;
-    flex-direction: column;
-    width: hGrid(10);
-    height: vGrid(7);
-    padding: vGrid(1) hGrid(1);
-    color: white;
 
-    .row {
-        display: flex;
+    &.row-1 {
+      justify-content: space-between;
+      align-content: flex-start;
+      max-height: vGrid(1);
+      .logo {
+        height: vGrid(0.5);
+      }
 
-        &.row-1 {
-            justify-content: space-between;
-            align-content: flex-start;
-            max-height: vGrid(1);
-            .logo {
-                height: vGrid(0.5);
-            }
-
-            .app-description {
-                width: hGrid(3);
-                text-align: right;
-            }
-        }
-
-        &.row-2 {
-            flex: 1;
-            flex-direction: column;
-            width: hGrid(4);
-            margin: 0 auto;
-            display: flex;
-            font-family: 'KongText';
-
-            justify-content: center;
-            align-items: center;
-
-            .enterPrompt {
-                color: $highlight-color;
-                font-size: 0.5em;
-                margin-top: 10px;
-                opacity: 0;
-                @include animate(opacity)
-            }
-
-            input {
-                width: hGrid(3.5);
-                height: vGrid(0.5);
-                background-color: $highlight-color;
-                text-align: center;
-                font-family: 'KongText';
-                color: $dark-base-color;
-                outline: none;
-                border: none;
-
-                &::placeholder {
-                    color: $dark-base-color;
-                    opacity: 0.5;
-                }
-
-                &:valid {
-                    & + .enterPrompt {
-                        opacity: 1;
-                    }
-                }
-            }
-
-            .vs {
-                padding: vGrid(0.5) 0;
-            }
-        }   
-
-        &.row-3 {
-            justify-content: space-between;
-            align-content: flex-end;
-            max-height: vGrid(1);
-
-            & > div {
-                align-self: flex-end    ;
-            }
-
-            .top-score-header, .fa-star {
-                color: $highlight-color;
-            }
-
-            .top-scorer {
-                font-family: 'KongText';
-            }
-
-            .social-links {
-                display: flex;
-                justify-content: space-between;
-                width: hGrid(2);
-
-                .social-link {
-                    color: white;
-                    font-size: 1.5em;
-                    &:hover {
-                        color: $highlight-color;
-                        @include animate(color);
-                    }
-                }
-            }
-        }
+      .app-description {
+        width: hGrid(3);
+        text-align: right;
+      }
     }
+
+    &.row-2 {
+      flex: 1;
+      flex-direction: column;
+      width: hGrid(4);
+      margin: 0 auto;
+      display: flex;
+      font-family: "KongText";
+
+      justify-content: center;
+      align-items: center;
+
+      .enterPrompt {
+        color: $highlight-color;
+        font-size: 0.5em;
+        margin-top: 10px;
+        opacity: 0;
+        @include animate(opacity);
+      }
+
+      input {
+        width: hGrid(3.5);
+        height: vGrid(0.5);
+        background-color: $highlight-color;
+        text-align: center;
+        font-family: "KongText";
+        color: $dark-base-color;
+        outline: none;
+        border: none;
+
+        &::placeholder {
+          color: $dark-base-color;
+          opacity: 0.5;
+        }
+
+        &:valid {
+          & + .enterPrompt {
+            opacity: 1;
+          }
+        }
+      }
+
+      .vs {
+        padding: vGrid(0.5) 0;
+      }
+    }
+
+    &.row-3 {
+      justify-content: space-between;
+      align-content: flex-end;
+      max-height: vGrid(1);
+
+      & > div {
+        align-self: flex-end;
+      }
+
+      .top-score-header,
+      .fa-star {
+        color: $highlight-color;
+      }
+
+      .top-scorer {
+        font-family: "KongText";
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: space-between;
+        width: hGrid(2);
+
+        .social-link {
+          color: white;
+          font-size: 1.5em;
+          &:hover {
+            color: $highlight-color;
+            @include animate(color);
+          }
+        }
+      }
+    }
+  }
 }

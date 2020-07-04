@@ -1,11 +1,11 @@
 @function hGrid($units) {
-    @return ($units / 10 * 100) * 1vw;
+  @return ($units / 10 * 100) * 1vw;
 }
 
 @function vGrid($units) {
-    @return ($units / 7 * 100) * 1vh;
+  @return ($units / 7 * 100) * 1vh;
 }
 
 @mixin animate($property) {
-    transition: $property 250ms ease-in-out;
+  transition: $property 250ms ease-in-out;
 }
