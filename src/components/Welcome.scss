@@ -92,3 +92,53 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .welcome-container {
+    padding: vGrid(0.8) hGrid(1);
+    input,
+    .top-score,
+    .vs {
+      display: none;
+    }
+
+    .row.row-1 {
+        flex-direction: column;
+        align-items: center;
+
+        .logo {
+            width: 150px;
+            height: auto;
+            padding-bottom: 30px;
+        }
+
+        .app-description {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    }
+
+    .row.row-2 {
+        .robot {
+            &:after {
+                content: "Please open the app on a desktop.";
+                position: absolute;
+                top: 130%;
+                font-size: 0.7rem;
+                text-align: center;
+                color: $highlight-color;
+                line-height: 1.1rem;
+            }
+        }
+    }
+
+    .row.row-3 {
+        align-items: center;
+        justify-content: center;
+        .social-links {
+            width: 90%;
+        }
+    }
+  }
+}
