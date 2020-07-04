@@ -38,6 +38,14 @@
         justify-content: center;
         font-size: 0.8em;
         color: $dark-base-color;
+        position: relative;
+
+        .reset-prompt {
+            color: $highlight-color;
+            position: absolute;
+            top: 138%;
+            font-size: 0.8em;
+        }
       }
     }
 

@@ -68,18 +68,21 @@ export default function Welcome({ topScorer, onSubmissionOfUsername }) {
         <div className="social-links">
           <a
             className="social-link github"
-            href="https://github.com/eccentricdz"
+            target="_blank"
+            href="https://github.com/eccentricdz/ping-pong-react"
           >
             <i className="fab fa-github"></i>
           </a>
           <a
             className="social-link instagram"
+            target="_blank"
             href="https://www.instagram.com/createdbyrahul/"
           >
             <i className="fab fa-instagram"></i>
           </a>
           <a
             className="social-link behance"
+            target="_blank"
             href="https://www.behance.net/eccentricdz"
           >
             <i className="fab fa-behance"></i>

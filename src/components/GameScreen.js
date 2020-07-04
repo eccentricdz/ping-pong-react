@@ -9,6 +9,8 @@ const GameScreen = ({ playerName, topScorer }) => {
   const [livesLeft, updateLivesLeft] = useState(3);
   const [gameInProgress, updateGameInProgress] = useState(false);
   const [playerWon, updatePlayerWon] = useState(false);
+  const [highScorer, updateHighScorer] = useState(topScorer);
+  const [newHighScore, updateNewHighScore] = useState(false);
 
   let ctx;
   let canvas;
@@ -26,7 +28,7 @@ const GameScreen = ({ playerName, topScorer }) => {
   const userpaddle = {};
   const aipaddle = {};
   let requestAnimationFrameID;
-  let mouseMoveX, mouseMoveTimeout;
+  let mouseMoveX;
 
   const initializeGame = () => {
     canvas = document.getElementById("myCanvas");
@@ -49,7 +51,8 @@ const GameScreen = ({ playerName, topScorer }) => {
       (e) => {
         const canvasClassList = e.target.classList;
         if (canvasClassList.contains("gameNotInProgress")) {
-          if (canvasClassList.contains("0")) resetGame();
+          console.log(e.target.dataset.livesleft);
+          if (e.target.dataset.livesleft === "0") resetGame();
           else startGame();
         }
       },
@@ -145,7 +148,32 @@ const GameScreen = ({ playerName, topScorer }) => {
       currentRobotLevel += 1;
     } else {
       updatePlayerWon(false);
-      updateLivesLeft((currentLives) => currentLives - 1);
+      updateLivesLeft((currentLives) => {
+        const livesLeftNow = currentLives - 1;
+        const canvas = document.getElementById("myCanvas");
+        const currentScore = parseInt(canvas.dataset.score);
+        if (livesLeftNow === 0) {
+          if (highScorer.score < currentScore) {
+            const newHighScorer = {
+              name: playerName,
+              score: currentScore,
+            };
+            updateHighScorer(newHighScorer);
+            updateNewHighScore(true);
+            fetch("https://ping-pong-highscore.herokuapp.com/updateHighScore", {
+              method: "post",
+              headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newHighScorer),
+            })
+              .then((res) => res.json())
+              .then((res) => console.log(res));
+          }
+        }
+        return livesLeftNow;
+      });
     }
     updateGameInProgress(false);
   };
@@ -255,18 +283,19 @@ const GameScreen = ({ playerName, topScorer }) => {
       <Scoreboard
         score={score}
         playerName={playerName}
-        topScorer={topScorer}
+        topScorer={highScorer}
         livesLeft={livesLeft}
         robotLevel={robotLevel}
         gameInProgress={gameInProgress}
         playerWon={playerWon}
+        newHighScore={newHighScore}
       ></Scoreboard>
       <canvas
         id="myCanvas"
-        className={`${
-          gameInProgress ? "gameInProgress" : "gameNotInProgress"
-        } ${livesLeft}`}
+        className={`${gameInProgress ? "gameInProgress" : "gameNotInProgress"}`}
+        data-livesleft={livesLeft}
         data-robot={robotLevel}
+        data-score={score}
       ></canvas>
     </div>
   );

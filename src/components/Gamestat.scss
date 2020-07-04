@@ -12,10 +12,6 @@
     font-size: 0.6em;
     color: white;
   }
-
-  &.highlight {
-    animation: blink 500ms 5;
-  }
 }
 
 .inactive {
@@ -23,16 +19,5 @@
   .game-stat-header {
     color: $subdue-color;
     animation: none;
-  }
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
   }
 }

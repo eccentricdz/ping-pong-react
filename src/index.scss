@@ -24,3 +24,18 @@ body {
 p + p {
   margin-top: $paragraph-gap;
 }
+
+.highlight {
+  animation: blink 500ms 5;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}

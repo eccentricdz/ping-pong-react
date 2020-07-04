@@ -11,6 +11,7 @@ const Scoreboard = ({
   robotLevel,
   topScorer,
   gameInProgress,
+  newHighScore,
 }) => {
   const [scoreBoardState, updateScoreBoardState] = useState("active");
   const [callToAction, updateCallToAction] = useState(
@@ -19,11 +20,13 @@ const Scoreboard = ({
   const [robotAttitude, updateRobotAttitude] = useState("chill");
 
   useEffect(() => {
-    if (livesLeft === 0) updateCallToAction("Game Over");
-    else updateCallToAction("Click anywhere to begin!");
+    if (livesLeft === 0) updateCallToAction("Game over");
+    else if (livesLeft === 3) updateCallToAction("Click anywhere to begin!");
+    else updateCallToAction("Click anywhere to resume!");
 
     if (playerWon) updateRobotAttitude("angry");
     else if (livesLeft < 3) updateRobotAttitude("happy");
+    else updateRobotAttitude("chill");
 
     if (gameInProgress) {
       updateScoreBoardState("inactive");
@@ -47,19 +50,29 @@ const Scoreboard = ({
           header="Lives left"
           value={livesLeft}
           kind="hearts"
-          highlight={robotAttitude == "happy" ? true : false}
+          highlight={robotAttitude == "happy" && livesLeft > 0 ? true : false}
         ></Gamestat>
       </div>
       <div className="column-2 column">
         <Robot attitude={robotAttitude}></Robot>
-        <div className="call-to-action">{callToAction}</div>
+        <div className="call-to-action">
+          {callToAction}
+          {livesLeft === 0 ? (
+            <div className="reset-prompt highlight">Click to reset!</div>
+          ) : null}
+        </div>
         <p className="playerName">{playerName}</p>
       </div>
       <div className="column-3 column">
         <Gamestat
           name="highScore"
           header="Top score"
-          value={topScorer!==undefined ? `${topScorer.name} ${topScorer.score}` : topScorer}
+          value={
+            topScorer !== undefined
+              ? `${topScorer.name} ${topScorer.score}`
+              : topScorer
+          }
+          highlight={newHighScore}
         ></Gamestat>
         <Gamestat name="score" header="Score" value={score}></Gamestat>
       </div>
