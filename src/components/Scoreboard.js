@@ -43,14 +43,14 @@ const Scoreboard = ({
           name="robotLevel"
           header="Level"
           value={robotLevel}
-          highlight={robotAttitude == "angry" ? true : false}
+          highlight={robotAttitude === "angry" ? true : false}
         ></Gamestat>
         <Gamestat
           name="livesLeft"
           header="Lives left"
           value={livesLeft}
           kind="hearts"
-          highlight={robotAttitude == "happy" && livesLeft > 0 ? true : false}
+          highlight={robotAttitude === "happy" && livesLeft > 0 ? true : false}
         ></Gamestat>
       </div>
       <div className="column-2 column">

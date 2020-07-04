@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./GameScreen.scss";
 import Curtain from "./Curtain";
 import Scoreboard from "./Scoreboard";
@@ -29,38 +29,6 @@ const GameScreen = ({ playerName, topScorer }) => {
   const aipaddle = {};
   let requestAnimationFrameID;
   let mouseMoveX;
-
-  const initializeGame = () => {
-    canvas = document.getElementById("myCanvas");
-    ctx = canvas.getContext("2d");
-
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-
-    ball.inix = canvas.width / 2;
-    canvas.addEventListener(
-      "mousemove",
-      (e) => {
-        mouseMoveX = e.clientX;
-      },
-      false
-    );
-
-    canvas.addEventListener(
-      "click",
-      (e) => {
-        const canvasClassList = e.target.classList;
-        if (canvasClassList.contains("gameNotInProgress")) {
-          console.log(e.target.dataset.livesleft);
-          if (e.target.dataset.livesleft === "0") resetGame();
-          else startGame();
-        }
-      },
-      false
-    );
-
-    playerOnYourMarks();
-  };
 
   const resetGame = () => {
     updateScore(0);
@@ -104,9 +72,9 @@ const GameScreen = ({ playerName, topScorer }) => {
     else ball.vx += paddleVelocity / 5;
   };
 
-  const inAiRange = (range) => {
-    return ball.x > aipaddle.x - range && ball.x < aipaddle.x + range;
-  };
+  //   const inAiRange = (range) => {
+  //     return ball.x > aipaddle.x - range && ball.x < aipaddle.x + range;
+  //   };
 
   const updateAiPaddle = () => {
     var paddlex = currentRobotLevel * 9;
@@ -128,11 +96,11 @@ const GameScreen = ({ playerName, topScorer }) => {
         aipaddle.x -= Math.min(diff, paddlex * dis);
       } else if (ball.x < aipaddle.x && ball.vx > 0) {
         aipaddle.x -= Math.min(diff, (paddlex * dis) / 2);
-      } else if (aipaddle.x == ball.x) return;
+      } else if (aipaddle.x === ball.x) return;
     }
     // When the ball is not moving towards the robot
     else {
-      var diff = Math.abs(aipaddle.x - canvas.width / 2);
+      diff = Math.abs(aipaddle.x - canvas.width / 2);
       if (aipaddle.x > canvas.width / 2) aipaddle.x -= Math.min(diff, 5);
       else if (aipaddle.x < canvas.width / 2) aipaddle.x += Math.min(diff, 5);
       else return;
@@ -225,7 +193,6 @@ const GameScreen = ({ playerName, topScorer }) => {
 
     if (newy <= paddle.height) {
       if (ballCollidesWithThePaddle(newx, false)) {
-        console.log("ball collided with AI paddle");
         updateScore((prevScore) => prevScore + 1);
         newy = paddle.height + ball.rad;
         ball.vy = -ball.vy;
@@ -274,6 +241,36 @@ const GameScreen = ({ playerName, topScorer }) => {
   };
 
   useEffect(() => {
+    const initializeGame = () => {
+      canvas = document.getElementById("myCanvas");
+      ctx = canvas.getContext("2d");
+
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+
+      ball.inix = canvas.width / 2;
+      canvas.addEventListener(
+        "mousemove",
+        (e) => {
+          mouseMoveX = e.clientX;
+        },
+        false
+      );
+
+      canvas.addEventListener(
+        "click",
+        (e) => {
+          const canvasClassList = e.target.classList;
+          if (canvasClassList.contains("gameNotInProgress")) {
+            if (e.target.dataset.livesleft === "0") resetGame();
+            else startGame();
+          }
+        },
+        false
+      );
+
+      playerOnYourMarks();
+    };
     initializeGame();
   }, []);
 
