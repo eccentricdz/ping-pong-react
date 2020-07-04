@@ -5,7 +5,7 @@ import Scoreboard from './Scoreboard';
 
 const GameScreen = ({ playerName, topScorer }) => {
     const [score, updateScore] = useState(0);
-    const [robotLevel, updateRobotLevel] = useState(3);
+    const [robotLevel, updateRobotLevel] = useState(1);
     const [livesLeft, updateLivesLeft] = useState(3);
     const [gameInProgress, updateGameInProgress] = useState(false);
     const [playerWon, updatePlayerWon] = useState(false);
@@ -14,6 +14,7 @@ const GameScreen = ({ playerName, topScorer }) => {
     let canvas;
     let trackPadx = 0;
     let paddleVelocity = 0;
+    let currentRobotLevel = 2;
     const paddle = {
         width: 200,
         height: 8
@@ -25,6 +26,7 @@ const GameScreen = ({ playerName, topScorer }) => {
     const userpaddle = {}
     const aipaddle = {}
     let requestAnimationFrameID;
+    let mouseMoveX, mouseMoveTimeout;
 
     const initializeGame = () => {
         canvas = document.getElementById("myCanvas");
@@ -35,14 +37,14 @@ const GameScreen = ({ playerName, topScorer }) => {
         
         ball.inix = canvas.width / 2;   
         canvas.addEventListener("mousemove", (e) => {
-            updateUserPaddleX(e.pageX);
+            mouseMoveX = e.clientX;
         }, false);
 
         canvas.addEventListener("click", (e) => {
             const canvasClassList = e.target.classList;
             if (canvasClassList.contains("gameNotInProgress")) {
                 if (canvasClassList.contains("0")) resetGame();
-                startGame();
+                else startGame();
             }
         }, false);
 
@@ -51,7 +53,8 @@ const GameScreen = ({ playerName, topScorer }) => {
 
     const resetGame = () => {
         updateScore(0);
-        updateRobotLevel(3);
+        updateRobotLevel(1);
+        currentRobotLevel = 2;
         updateLivesLeft(3);
     }
 
@@ -68,17 +71,18 @@ const GameScreen = ({ playerName, topScorer }) => {
     }
 
     const ballCollidesWithThePaddle = (newx, userPaddle) => {
+        const collideBuffer = 50;
         if (userPaddle)
-            return ((newx >= userpaddle.x - (paddle.width / 2) - 20) && (newx <= userpaddle.x + paddle.width / 2 + 20));
+            return ((newx >= userpaddle.x - (paddle.width / 2) - collideBuffer) && (newx <= userpaddle.x + paddle.width / 2 + collideBuffer));
         else
-            return ((newx >= aipaddle.x - (paddle.width / 2) - 20) && (newx <= aipaddle.x + paddle.width / 2 + 20));
+            return ((newx >= aipaddle.x - (paddle.width / 2) - collideBuffer) && (newx <= aipaddle.x + paddle.width / 2 + collideBuffer));
     }
 
     const updateBallXVelocity = (newx, paddleVelocity) => {
         if ((ball.vx > 0 && paddleVelocity > 0) || (ball.vx < 0 && paddleVelocity < 0))
-            ball.vx += paddleVelocity / 5;
-        else
             ball.vx += paddleVelocity / 2;
+        else
+            ball.vx += paddleVelocity / 5;
     }
 
     const inAiRange = (range) => {
@@ -86,16 +90,18 @@ const GameScreen = ({ playerName, topScorer }) => {
     }
 
     const updateAiPaddle = () => {
-        var paddlex = (robotLevel * 10);
-        var res = 0.75;
+        var paddlex = (currentRobotLevel * 9);
+        // When the ball is moving towards the robot
         if (ball.vy < 0) {
-            if (inAiRange(30))
-                paddlex /= 2;
-            if (ball.y <= Math.abs(ball.vy * 10))
-                paddlex *= (robotLevel / 3);
+            // if (inAiRange(30))
+            //     paddlex /= 2;
+            if (ball.y <= Math.abs(ball.vy * 2))
+                paddlex += (currentRobotLevel * 3);
+            if (ball.y <= Math.abs(ball.vy / 4))
+                paddlex += currentRobotLevel * 5;
             var diff = Math.abs(aipaddle.x - ball.x);
-            var dis = diff / (Math.max(1, (canvas.width / 2)));
-            dis = Math.max(res, dis);
+            var dis = diff / (canvas.width / 2);
+            dis = Math.max(1, dis);
 
             if (ball.x > aipaddle.x && ball.vx > 0) {
                 aipaddle.x += Math.min(diff, paddlex * dis);
@@ -112,6 +118,7 @@ const GameScreen = ({ playerName, topScorer }) => {
             else if (aipaddle.x == ball.x)
                 return;
         }
+        // When the ball is not moving towards the robot
         else {
             var diff = Math.abs(aipaddle.x - canvas.width / 2);
             if (aipaddle.x > canvas.width / 2)
@@ -129,6 +136,7 @@ const GameScreen = ({ playerName, topScorer }) => {
             updatePlayerWon(true);
             updateScore((currentScore) => currentScore + (robotLevel * 10));
             updateRobotLevel((currentRobolLevel) => currentRobolLevel + 1);
+            currentRobotLevel += 1;
         }
         else {
             updatePlayerWon(false);
@@ -141,8 +149,8 @@ const GameScreen = ({ playerName, topScorer }) => {
     const playerOnYourMarks = () => {
         ball.x = ball.inix;
         ball.y = ball.iniy;
-        ball.vx = 10 + robotLevel;
-        ball.vy = 10 + robotLevel;
+        ball.vx = 12 + robotLevel;
+        ball.vy = 12 + robotLevel;
 
         userpaddle.x = ball.inix;
         aipaddle.x = ball.inix;
@@ -170,8 +178,13 @@ const GameScreen = ({ playerName, topScorer }) => {
     }
 
     const gameAnimation = () => {
-        var newx = ball.x + ball.vx;
-        var newy = ball.y + ball.vy;
+        updateAiPaddle();
+        updateUserPaddleX(mouseMoveX);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        draw();
+
+        let newx = ball.x + ball.vx;
+        let newy = ball.y + ball.vy;
 
         if (newy <= (paddle.height)) {
             if (ballCollidesWithThePaddle(newx, false)) {
@@ -223,10 +236,6 @@ const GameScreen = ({ playerName, topScorer }) => {
         ball.x = newx;
         ball.y = newy;
 
-        updateAiPaddle();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        draw();
-
         requestAnimationFrameID = requestAnimationFrame(gameAnimation);
     }
 
@@ -237,7 +246,6 @@ const GameScreen = ({ playerName, topScorer }) => {
     return (
         <div className="gameScreenWrapper">
             <Curtain></Curtain>
-            <canvas id="myCanvas" className={`${gameInProgress ? "gameInProgress" : "gameNotInProgress"} ${livesLeft} `}></canvas>
             <Scoreboard
                 score={score}
                 playerName={playerName}
@@ -247,6 +255,11 @@ const GameScreen = ({ playerName, topScorer }) => {
                 gameInProgress={gameInProgress}
                 playerWon={playerWon}
             ></Scoreboard>
+            <canvas
+                id="myCanvas"
+                className={`${gameInProgress ? "gameInProgress" : "gameNotInProgress"} ${livesLeft}`}
+                data-robot={robotLevel}
+            ></canvas>
         </div>
     )
 }

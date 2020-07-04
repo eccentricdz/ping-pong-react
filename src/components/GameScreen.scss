@@ -10,7 +10,7 @@
 
 #myCanvas {
     display: block;
-    background-color: $dark-base-color;
     width: hGrid(10);
     height: vGrid(7);
+    z-index: 4;
 }
