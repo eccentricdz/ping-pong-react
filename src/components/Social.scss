@@ -1,0 +1,17 @@
+@import "../sass-exports/variables";
+@import "../sass-exports/utils";
+
+.social-links {
+  display: flex;
+  justify-content: space-between;
+  width: hGrid(2);
+
+  .social-link {
+    color: white;
+    font-size: 1.5em;
+    &:hover {
+      color: $highlight-color;
+      @include animate(color);
+    }
+  }
+}

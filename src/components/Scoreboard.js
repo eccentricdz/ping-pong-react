@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Scoreboard.scss";
 import Robot from "./Robot";
 import Gamestat from "./Gamestat";
+import Social from "./Social";
 
 const Scoreboard = ({
   playerWon,
@@ -58,7 +59,10 @@ const Scoreboard = ({
         <div className="call-to-action">
           {callToAction}
           {livesLeft === 0 ? (
-            <div className="reset-prompt highlight">Click to reset!</div>
+            <div className="reset-prompt">
+              <Social></Social>
+              <p className="highlight">Click to reset!</p>
+            </div>
           ) : null}
         </div>
         <p className="playerName">{playerName}</p>
