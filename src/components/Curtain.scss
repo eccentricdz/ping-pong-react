@@ -5,7 +5,7 @@
   height: 100vh;
   background: $highlight-color;
   top: 0;
-  z-index: 5;
+  z-index: 10;
 
   &.open {
     width: 100vw;
