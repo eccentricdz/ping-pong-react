@@ -72,9 +72,9 @@ const Scoreboard = ({
           name="highScore"
           header="Top score"
           value={
-            topScorer !== undefined
+            topScorer !== undefined && topScorer.name && topScorer.score
               ? `${topScorer.name} ${topScorer.score}`
-              : topScorer
+              : null
           }
           highlight={newHighScore}
         ></Gamestat>

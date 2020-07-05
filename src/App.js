@@ -10,7 +10,6 @@ const App = () => {
     setPlayerName(playerName);
   };
 
-  // We would eventually need to fetch out scores from a service
   const getTopScorer = () => {
     const highScoreUrl =
       "https://ping-pong-highscore.herokuapp.com/getHighScore";

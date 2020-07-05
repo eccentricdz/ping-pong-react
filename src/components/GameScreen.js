@@ -271,8 +271,13 @@ const GameScreen = ({ playerName, topScorer }) => {
 
       playerOnYourMarks();
     };
+
     initializeGame();
   }, []);
+
+  useEffect(() => {
+      updateHighScorer(topScorer)
+  }, [topScorer])
 
   return (
     <div className="gameScreenWrapper">

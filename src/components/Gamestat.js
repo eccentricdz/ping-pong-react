@@ -21,7 +21,7 @@ const Gamestat = ({ name, header, value, kind, highlight }) => {
           {hearts}
         </ul>
       ) : (
-        <p className="game-stat-value">{value!==undefined ? value : (<i className="fa fa-circle-o-notch fa-spin spinner"></i>)}</p>
+        <p className="game-stat-value">{value!==null ? value : (<i className="fa fa-circle-o-notch fa-spin spinner"></i>)}</p>
       )}
     </div>
   );
